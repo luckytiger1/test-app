@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer");
+import { toMatchImageSnapshot } from "jest-image-snapshot";
 
 describe("jest-image-snapshot usage with an image received from puppeteer", () => {
     let browser;
@@ -8,8 +9,9 @@ describe("jest-image-snapshot usage with an image received from puppeteer", () =
     });
 
     it("renders correctly", async () => {
+        expect.extend({ toMatchImageSnapshot });
         const page = await browser.newPage();
-        await page.goto("https://localhost:3000");
+        await page.goto("http://localhost:3000/test-app");
         const image = await page.screenshot();
 
         expect(image).toMatchImageSnapshot();
